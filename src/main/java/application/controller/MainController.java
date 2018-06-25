@@ -1,14 +1,16 @@
 package application.controller;
 
-import application.repository.DeviceRepository;
+import application.entity.MaintenanceRecord;
+import application.entity.MaintenanceSchedule;
 import application.service.MainService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @Controller
 public class MainController {
@@ -23,10 +25,41 @@ public class MainController {
     }
 
     @RequestMapping(value = "/reminder", method = RequestMethod.GET)
-    public String test(Model model) {
+    public String reminder(Model model) {
         LOGGER.info("testing");
         model.addAttribute("reminder", mainService.getReminders(REMINDER_DAYS));
         return "reminder";
+    }
+
+    @RequestMapping(value = "/record", method = RequestMethod.GET)
+    public String record() {
+        return "record";
+    }
+
+    @RequestMapping(value = "/getRecord", method = RequestMethod.GET)
+    @ResponseBody
+    public List<MaintenanceRecord> getRecord() {
+        return mainService.getRecords();
+    }
+
+    @GetMapping("/addRecord")
+    public String addRecordForm(Model model) {
+        model.addAttribute("employees", mainService.getEmployees())
+                .addAttribute("record", new MaintenanceRecord())
+                .addAttribute("devices", mainService.getDevices());
+        return "addRecord";
+    }
+
+    @PostMapping("/addRecord")
+    public String addRecord(@ModelAttribute MaintenanceRecord record) {
+        LOGGER.info(record.toString());
+        mainService.addRecord(record);
+        return "redirect:/record";
+    }
+
+    @GetMapping("/getSchedule")
+    public @ResponseBody List<MaintenanceSchedule> getSchedule(@RequestParam String device) {
+        return mainService.getSchedules(Long.parseLong(device));
     }
 
 //    @RequestMapping(value = "/api/device/list", method = RequestMethod.GET)

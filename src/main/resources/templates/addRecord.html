@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Add Record</title>
+</head>
+<body>
+<h1>Form</h1>
+<form action="#" th:action="@{/addRecord}" th:object="${record}" method="post">
+    <p>Device: <select title="Device" id="deviceSelect">
+        <option th:each="device: ${devices}" th:value="${device.id}" th:text="${device.name}">
+        </option>
+    </select></p>
+    <p>Schedule: <select th:field="*{schedule.id}" title="Schedule" id="scheduleSelect"></select></p>
+    <p>Start Time: <input id="startTime" type="text" th:field="*{startTime}" title="Start Time"></p>
+    <p>End Time: <input id="endTime" type="text" th:field="*{endTime}" title="End Time"></p>
+    <p>Employee: <select th:field="*{employee.id}" title="Employee">
+        <option th:each="employee: ${employees}" th:value="${employee.id}"
+                th:text="${employee.name}"></option>
+    </select></p>
+    <p><input type="submit" value="Submit"/> <input type="reset" value="Reset"/></p>
+</form>
+</body>
+</html>
+
+<script src="/jquery-3.3.1.min.js"></script>
+<link rel="stylesheet" type="text/css" href="/jquery.datetimepicker.min.css">
+<script type="text/javascript" charset="utf8" src="/jquery.datetimepicker.full.min.js"></script>
+<script type="text/javascript" src="/addRecord.js"></script>

@@ -1,5 +1,9 @@
 package application.entity;
 
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+
 import javax.persistence.*;
 import java.text.DateFormat;
 import java.text.ParseException;
@@ -16,6 +20,7 @@ public class MaintenanceSchedule {
     @GeneratedValue
     private Long id;
 
+    @JsonIgnore
     private Date firstSchedule;
 
     @ManyToOne
@@ -23,6 +28,7 @@ public class MaintenanceSchedule {
     private MaintenanceRule rule;
 
     @OneToMany(mappedBy = "schedule")
+    @JsonIgnore
     private List<MaintenanceRecord> records;
 
     public MaintenanceSchedule(Date firstSchedule, MaintenanceRule rule) {
@@ -58,6 +64,7 @@ public class MaintenanceSchedule {
         this.rule = rule;
     }
 
+    @JsonIgnore
     public Date getNextMaintenanceDate() {
         long diffMillis = Date.from(Instant.now()).getTime() - firstSchedule.getTime();
         long days = TimeUnit.MILLISECONDS.toDays(diffMillis);

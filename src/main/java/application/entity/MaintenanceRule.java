@@ -1,5 +1,9 @@
 package application.entity;
 
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+
 import javax.persistence.*;
 import java.util.Collections;
 import java.util.List;
@@ -11,6 +15,8 @@ public class MaintenanceRule {
     private Long id;
 
     private String name;
+
+    @JsonIgnore
     private int intervalDays;
 
     @ManyToOne
@@ -18,6 +24,7 @@ public class MaintenanceRule {
     private Device device;
 
     @OneToMany(mappedBy = "rule")
+    @JsonIgnore
     private List<MaintenanceSchedule> schedules;
 
     public MaintenanceRule() {

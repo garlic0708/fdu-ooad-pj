@@ -1,5 +1,7 @@
 package application.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
@@ -15,11 +17,16 @@ public class Device {
     private Long id;
 
     private String name;
+
+    @JsonIgnore
     private String type;
+    @JsonIgnore
     private String modelNumber;
+    @JsonIgnore
     private String location;
 
     @OneToMany(mappedBy = "device")
+    @JsonIgnore
     private List<MaintenanceRule> maintenanceRules;
 
     public Device() {

@@ -1,6 +1,12 @@
 package application.entity;
 
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+import org.springframework.format.annotation.DateTimeFormat;
+
 import javax.persistence.*;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 @Entity
@@ -9,7 +15,9 @@ public class MaintenanceRecord {
     @GeneratedValue
     private Long id;
 
+    @DateTimeFormat(pattern = "yyyy/MM/dd HH:mm")
     private Date startTime;
+    @DateTimeFormat(pattern = "yyyy/MM/dd HH:mm")
     private Date endTime;
 
     @ManyToOne
@@ -19,6 +27,16 @@ public class MaintenanceRecord {
     @ManyToOne
     @JoinColumn(name = "scheduleId")
     private MaintenanceSchedule schedule;
+
+    public MaintenanceRecord() {
+    }
+
+    public MaintenanceRecord(Date startTime, Date endTime, Employee employee, MaintenanceSchedule schedule) {
+        this.startTime = startTime;
+        this.endTime = endTime;
+        this.employee = employee;
+        this.schedule = schedule;
+    }
 
     public Long getId() {
         return id;
@@ -50,5 +68,24 @@ public class MaintenanceRecord {
 
     public void setEmployee(Employee employee) {
         this.employee = employee;
+    }
+
+    public MaintenanceSchedule getSchedule() {
+        return schedule;
+    }
+
+    public void setSchedule(MaintenanceSchedule schedule) {
+        this.schedule = schedule;
+    }
+
+    @Override
+    public String toString() {
+        return "MaintenanceRecord{" +
+                "id=" + id +
+                ", startTime=" + startTime +
+                ", endTime=" + endTime +
+                ", employee=" + employee +
+                ", schedule=" + schedule +
+                '}';
     }
 }

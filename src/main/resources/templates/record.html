@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Reminder</title>
+</head>
+<body>
+<label>Device</label><select id="deviceSelect" title="Device"></select>
+<label>Rule</label><select id="ruleSelect" title="Rule"></select>
+<table id="table" class="display">
+    <thead>
+    <tr>
+        <th>Device</th>
+        <th>Rule</th>
+        <th>Start Time</th>
+        <th>End Time</th>
+        <th>Employee</th>
+    </tr>
+    </thead>
+    <tbody>
+    <!--<tr th:each="item: ${record}">-->
+        <!--<td th:text="${item.schedule.rule.device.name}">Row 1 Data 1</td>-->
+        <!--<td th:text="${item.schedule.rule.name}">Row 1 Data 2</td>-->
+        <!--<td th:text="${item.startTime}">Row 1 Data 3</td>-->
+        <!--<td th:text="${item.endTime}">Row 1 Data 4</td>-->
+        <!--<td th:text="${item.employee.name}">Row 1 Data 5</td>-->
+    <!--</tr>-->
+    </tbody>
+</table>
+</body>
+</html>
+
+<script src="/jquery-3.3.1.min.js"></script>
+<link rel="stylesheet" type="text/css" href="/jquery.dataTables.css">
+<script type="text/javascript" charset="utf8" src="/jquery.dataTables.js"></script>
+<script type="text/javascript" src="/record.js"></script>
