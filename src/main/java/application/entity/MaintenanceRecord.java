@@ -76,7 +76,7 @@ public class MaintenanceRecord {
     }
 
     public long getDurationInMinutes() {
-        return Duration.between(endTime.toInstant(), startTime.toInstant()).toMinutes();
+        return Duration.between(startTime.toInstant(), endTime.toInstant()).toMinutes();
     }
 
     @Override

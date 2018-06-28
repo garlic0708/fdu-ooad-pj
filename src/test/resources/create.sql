@@ -117,7 +117,9 @@ CREATE TABLE `maintenance_record` (
 
 -- LOCK TABLES `maintenance_record` WRITE;
 /*!40000 ALTER TABLE `maintenance_record` DISABLE KEYS */;
-INSERT INTO `maintenance_record` VALUES (13,'2018-06-27 21:11:28','2018-06-27 19:41:28',11,7),(14,'2018-06-27 21:41:28','2018-06-27 19:41:28',12,8);
+INSERT INTO `maintenance_record` VALUES (13,'2018-06-27 21:11:28','2018-06-27 19:41:28',11,7),
+  (19,'2018-06-28 21:11:28','2018-06-28 19:41:28',11,7),
+  (14,'2018-06-27 21:41:28','2018-06-27 19:41:28',12,8);
 /*!40000 ALTER TABLE `maintenance_record` ENABLE KEYS */;
 -- UNLOCK TABLES;
 

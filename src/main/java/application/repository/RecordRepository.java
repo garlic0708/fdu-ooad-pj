@@ -10,4 +10,6 @@ public interface RecordRepository extends CrudRepository<MaintenanceRecord, Long
     List<MaintenanceRecord> findAll();
 
     List<MaintenanceRecord> findByScheduleId(long scheduleId);
+
+    List<MaintenanceRecord> findByScheduleRuleDeviceId(long deviceId);
 }

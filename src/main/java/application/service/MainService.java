@@ -22,4 +22,8 @@ public interface MainService {
     List<Device> getDevices();
 
     List<MaintenanceSchedule> getSchedules(long deviceId);
+
+    long getTotalDurationByDevice(long deviceId);
+
+    long getTotalDurationBySchedule(long scheduleId);
 }

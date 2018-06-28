@@ -62,4 +62,18 @@ public class MainServiceImpl implements MainService {
     public List<MaintenanceSchedule> getSchedules(long deviceId) {
         return scheduleRepository.findByRule_Device_Id(deviceId);
     }
+
+    @Override
+    public long getTotalDurationByDevice(long deviceId) {
+        return recordRepository.findByScheduleRuleDeviceId(deviceId)
+                .stream().map(MaintenanceRecord::getDurationInMinutes)
+                .reduce(0L, Long::sum);
+    }
+
+    @Override
+    public long getTotalDurationBySchedule(long scheduleId) {
+        return recordRepository.findByScheduleId(scheduleId)
+                .stream().map(MaintenanceRecord::getDurationInMinutes)
+                .reduce(0L, Long::sum);
+    }
 }

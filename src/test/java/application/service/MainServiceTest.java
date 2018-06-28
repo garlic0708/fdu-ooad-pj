@@ -18,13 +18,11 @@ import java.time.Duration;
 import java.time.Instant;
 import java.util.Arrays;
 import java.util.Date;
-import java.util.HashSet;
 import java.util.List;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.*;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(classes = {SpringBootApplication.class})
@@ -83,16 +81,16 @@ public class MainServiceTest {
     @Test
     public void getRecords() {
         List<MaintenanceRecord> records = mainService.getRecords();
-        assertEquals(records.size(), 2);
-        assertSetEquals(records, r -> r.getEmployee().getName(), "Jack", "Mike");
+        assertEquals(records.size(), 3);
+        assertSetEquals(records, r -> r.getEmployee().getName(), "Jack", "Jack", "Mike");
     }
 
     @Test
     public void getRecords1() {
         MaintenanceSchedule schedule = getScheduleOfDevice1();
         List <MaintenanceRecord> records = mainService.getRecords(schedule.getId());
-        assertEquals(records.size(), 1);
-        assertSetEquals(records, r -> r.getEmployee().getName(), "Jack");
+        assertEquals(records.size(), 2);
+        assertSetEquals(records, r -> r.getEmployee().getName(), "Jack", "Jack");
     }
 
     @Test
@@ -107,8 +105,8 @@ public class MainServiceTest {
                 jack, schedule);
         mainService.addRecord(newRecord);
         List<MaintenanceRecord> records = mainService.getRecords(schedule.getId());
-        assertEquals(records.size(), 2);
-        assertSetEquals(records, r -> r.getEmployee().getName(), "Jack", "Jack");
+        assertEquals(records.size(), 3);
+        assertSetEquals(records, r -> r.getEmployee().getName(), "Jack", "Jack", "Jack");
     }
 
     @Test
@@ -132,10 +130,30 @@ public class MainServiceTest {
         assertSetEquals(schedules, s -> s.getRule().getName(), "Device 1 Big", "Device 1 Small");
     }
 
-    private List<MaintenanceSchedule> getSchedulesOfDevice1() {
+    @Test
+    public void getTotalDurationByDevice() {
+        Device device = getDevice1();
+        long duration = mainService.getTotalDurationByDevice(device.getId());
+        assertEquals(duration, 180);
+    }
+
+    @Test
+    public void getTotalDurationBySchedule() {
+        long duration = mainService.getTotalDurationBySchedule(
+                getScheduleOfDevice1().getId()
+        );
+        assertEquals(duration, 180);
+    }
+
+    private Device getDevice1() {
         List<Device> devices = mainService.getDevices();
         Device device = devices.stream().filter(d -> d.getName().equals("Device 1")).findAny().orElse(null);
         assertNotNull(device);
+        return device;
+    }
+
+    private List<MaintenanceSchedule> getSchedulesOfDevice1() {
+        Device device = getDevice1();
         return mainService.getSchedules(device.getId());
     }
 
@@ -148,7 +166,8 @@ public class MainServiceTest {
     }
 
     private static <T> void assertSetEquals(List<T> list, Function<T, String> mapper, String... values) {
-        assertEquals(list.stream().map(mapper).collect(Collectors.toSet()),
-                new HashSet<>(Arrays.asList(values)));
+        Arrays.sort(values);
+        assertArrayEquals(list.stream().map(mapper).sorted().toArray(),
+                values);
     }
 }
