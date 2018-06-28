@@ -13,11 +13,13 @@ public interface MainService {
 
     List<MaintenanceRecord> getRecords();
 
+    List<MaintenanceRecord> getRecords(long scheduleId);
+
     void addRecord(MaintenanceRecord record);
 
-    Iterable<Employee> getEmployees();
+    List<Employee> getEmployees();
 
-    Iterable<Device> getDevices();
+    List<Device> getDevices();
 
     List<MaintenanceSchedule> getSchedules(long deviceId);
 }

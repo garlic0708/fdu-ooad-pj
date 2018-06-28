@@ -8,4 +8,6 @@ import java.util.List;
 public interface RecordRepository extends CrudRepository<MaintenanceRecord, Long> {
 
     List<MaintenanceRecord> findAll();
+
+    List<MaintenanceRecord> findByScheduleId(long scheduleId);
 }

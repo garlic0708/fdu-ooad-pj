@@ -1,12 +1,9 @@
 package application.entity;
 
-import com.fasterxml.jackson.annotation.JsonIdentityInfo;
-import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
+import java.time.Duration;
 import java.util.Date;
 
 @Entity
@@ -76,6 +73,10 @@ public class MaintenanceRecord {
 
     public void setSchedule(MaintenanceSchedule schedule) {
         this.schedule = schedule;
+    }
+
+    public long getDurationInMinutes() {
+        return Duration.between(endTime.toInstant(), startTime.toInstant()).toMinutes();
     }
 
     @Override
